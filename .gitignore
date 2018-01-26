@@ -1,6 +1,6 @@
 xmlrunner/
 logs/
-addressing_service/
+addressing_service/settings.py
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
