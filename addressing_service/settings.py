@@ -3,7 +3,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-OS_API_KEY = 'AE1CHHVYKjdmzo34yFe1KLlGlOlCogGB'
+OS_API_KEY = 'placeholder'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^f)mh%0t_-jck5ir1#y^x79&y)2fexp3c&weq-a_k@_6x0cu*$'
 
