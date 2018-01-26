@@ -1,0 +1,13 @@
+xmlrunner/
+logs/
+addressing_service/settings.py
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+db.sqlite3
+.coverage
+.idea/
+.settings/
