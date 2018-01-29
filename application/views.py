@@ -180,7 +180,6 @@ def __format_response(json_response):
                 "line1": address_lines[0],
                 "line2": address_lines[1],
                 "townOrCity": address['DPA']['POST_TOWN'],
-                "county": "TBD",
                 "country": "United Kingdom",
                 "postcode": address['DPA']['POSTCODE'],
             }

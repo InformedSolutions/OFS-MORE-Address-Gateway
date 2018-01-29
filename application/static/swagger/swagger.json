@@ -123,7 +123,7 @@
       "properties": {
         "combinedAddress": {
           "type": "string",
-          "example": "The Old Bank, Old Market Pl, Altrincham, Cheshire"
+          "example": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA"
         },
         "line1": {
           "type": "string",
