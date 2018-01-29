@@ -1,10 +1,3 @@
-"""
-OFS-MORE-CCN3: Apply to be a Childminder Beta
--- views.py --
-
-@author: Informed Solutions
-"""
-
 import json
 import logging
 import traceback
@@ -16,6 +9,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
+from ast import literal_eval
 
 # initiate logging
 log = logging.getLogger('django.server')
@@ -37,11 +31,11 @@ def postcode_request(request, postcode):
                             status=403)
     try:
         # ensure the postcode is long enough
-        if len(postcode) > 5:
+        if len(postcode.strip()) > 5:
             serializer = PostcodeRequestSerializer(data={'postcode': postcode})
             # ensures that the data fits the data model (ensures it's long enough)
             if serializer.is_valid():
-                return __create_postcode_search_request(serializer.data)
+                return create_postcode_search_request(serializer.data)
             err = __format_error(serializer.errors)
             log.error("Django serialization error: " + err[0] + err[1])
             return JsonResponse({"message": err[0] + err[1], "error": "Bad Request"},
@@ -81,7 +75,7 @@ def change_api_key(request):
         return JsonResponse(ex.__dict__, status=500)
 
 
-def __create_postcode_search_request(postcode):
+def create_postcode_search_request(postcode):
     """
     :param postcode: json with postcode in it
     :return: JsonResponse with the success/error message
@@ -102,67 +96,65 @@ def __create_postcode_search_request(postcode):
         return JsonResponse(json.loads(response.text), status=response.status_code)
 
 
-def get_organisation_name(address):
+def __format_response(json_response):
     try:
-        org = address.get('ORGANISATION_NAME')
-        return str(org)
+        results = []
+        for address in json_response['results']:
+            # format address lines
+            address_lines = __format_address(address['DPA'])
+            temp = {
+                "combinedAddress": address['DPA']['ADDRESS'],
+                "line1": address_lines[0],
+                "line2": address_lines[1],
+                "townOrCity": address['DPA']['POST_TOWN'],
+                "postcode": address['DPA']['POSTCODE'],
+            }
+            # add result to array
+            results.append(temp)
+            temp = {}
+
+        # Get the total number of matches for the requested postcode
+        count = json_response['header']['totalresults']
+
     except Exception as ex:
-        print(ex)
-        return '_empty'
+        if(json_response['header']['totalresults']) == 0 :
+            return JsonResponse({"message": "No results were found", "error": "invalid postcode"}, status=404)
+        return JsonResponse({"message": "Problem formatting results", "error": ex}, status=500)
+    return JsonResponse({"count": count, "results": results}, status=200)
 
 
-def __get_building_name(address):
-    try:
-        name = address.get('BUILDING_NAME')
-        return str(name)
-    except Exception as ex:
-        print(ex)
-
-
-def __get_sub_building_name(address):
-    try:
-        number = address.get('SUB_BUILDING_NAME')
-        return str(number)
-    except Exception as ex:
-        print(ex)
-
-
-def __get_building_number(address):
-    try:
-        number = address.get('BUILDING_NUMBER')
-        return str(number)
-    except Exception as ex:
-        print(ex)
-
-
-def __get_thoroughfare_name(address):
-    try:
-        name = address.get('THOROUGHFARE_NAME')
-        return str(name)
-    except Exception as ex:
-        print(ex)
-
-
-def format_address(address):
+def __format_address(address):
+    """
+    :param address: an individual address object
+    :return: An array with the address line 1 and address line 2 in it.
+    """
     address_line1 = ''
     address_line2 = ''
     try:
+        # Use getters to get all address line variables
         org = get_organisation_name(address)
         building_name = __get_building_name(address)
         sub_building_name = __get_sub_building_name(address)
         building_number = __get_building_number(address)
         thoroughfare_name = __get_thoroughfare_name(address)
         address_line2 = building_number + ' ' + thoroughfare_name
+
+        # If a variable is set to None, that means that it does not exist for that address
+        # these statements are to determine the formatting of address line 1 vs 2
         if org != 'None':
-            if sub_building_name or building_name:
-                address_line1 = org + ', ' + sub_building_name + ' ' + building_name
-            elif building_name:
+            if building_name != 'None' and sub_building_name == 'None':
                 address_line1 = org + ', ' + building_name
+            elif sub_building_name == 'None' and building_name != 'None':
+                address_line1 = org + ', ' + sub_building_name
             else:
                 address_line1 = org
         elif org == 'None':
-            if sub_building_name != 'None' or building_name != 'None':
+            if sub_building_name != 'None' and building_name != 'None':
                 address_line1 = sub_building_name + ' ' + building_name
+            elif sub_building_name == 'None' and building_name != 'None':
+                address_line1 = building_name
+            elif building_name == 'None' and sub_building_name != 'None':
+                address_line1 = sub_building_name
             elif sub_building_name == 'None' and building_name == 'None':
                 address_line1 = address_line2
                 address_line2 = ''
@@ -175,27 +167,70 @@ def format_address(address):
     return addr
 
 
-def __format_response(json_response):
-    try:
-        results = []
-        for address in json_response['results']:
-            address_lines = format_address(address['DPA'])
-            temp = {
-                "combinedAddress": address['DPA']['ADDRESS'],
-                "line1": address_lines[0],
-                "line2": address_lines[1],
-                "townOrCity": address['DPA']['POST_TOWN'],
-                "country": "United Kingdom",
-                "postcode": address['DPA']['POSTCODE'],
-            }
-            results.append(temp)
-            temp = {}
-        count = json_response['header']['totalresults']
+def get_organisation_name(address):
+    """
 
+    :param address: an individual address object
+    :return: organisation name
+    """
+    try:
+        org = address.get('ORGANISATION_NAME')
+        return str(org)
     except Exception as ex:
         print(ex)
-        return JsonResponse({"message": "Problem formatting results", "error": str(ex)}, status=500)
-    return JsonResponse({"count": count, "results": results}, status=200)
+        return '_empty'
+
+
+def __get_building_name(address):
+    """
+
+    :param address: an individual address object
+    :return: building name
+    """
+    try:
+        name = address.get('BUILDING_NAME')
+        return str(name)
+    except Exception as ex:
+        print(ex)
+
+
+def __get_sub_building_name(address):
+    """
+
+    :param address: an individual address object
+    :return: sub building name
+    """
+    try:
+        number = address.get('SUB_BUILDING_NAME')
+        return str(number)
+    except Exception as ex:
+        print(ex)
+
+
+def __get_building_number(address):
+    """
+
+    :param address: an individual address object
+    :return: building number
+    """
+    try:
+        number = address.get('BUILDING_NUMBER')
+        return str(number)
+    except Exception as ex:
+        print(ex)
+
+
+def __get_thoroughfare_name(address):
+    """
+
+    :param address: an individual address object
+    :return: street/road name
+    """
+    try:
+        name = address.get('THOROUGHFARE_NAME')
+        return str(name)
+    except Exception as ex:
+        print(ex)
 
 
 def __format_error(ex):
