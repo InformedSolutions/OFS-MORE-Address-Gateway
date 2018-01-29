@@ -1,3 +1,10 @@
+"""
+OFS-MORE-CCN3: Apply to be a Childminder Beta
+-- views.py --
+
+@author: Informed Solutions
+"""
+
 import json
 import logging
 import traceback
@@ -9,7 +16,6 @@ from django.conf import settings
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
-from ast import literal_eval
 
 # initiate logging
 log = logging.getLogger('django.server')
@@ -121,7 +127,6 @@ def __get_sub_building_name(address):
         print(ex)
 
 
-
 def __get_building_number(address):
     try:
         number = address.get('BUILDING_NUMBER')
@@ -161,8 +166,8 @@ def format_address(address):
             elif sub_building_name == 'None' and building_name == 'None':
                 address_line1 = address_line2
                 address_line2 = ''
-        address_line1 = address_line1.replace('None','')
-        address_line2 = address_line2.replace('None','')
+        address_line1 = address_line1.replace('None', '')
+        address_line2 = address_line2.replace('None', '')
         addr = [address_line1, address_line2]
     except Exception as ex:
         print(ex)

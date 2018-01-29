@@ -1,3 +1,9 @@
+"""
+OFS-MORE-CCN3: Apply to be a Childminder Beta
+-- models.py --
+
+@author: Informed Solutions
+"""
 from django.db import models
 
 
