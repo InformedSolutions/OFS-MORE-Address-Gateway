@@ -9,6 +9,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
+from ast import literal_eval
 
 # initiate logging
 log = logging.getLogger('django.server')
@@ -95,15 +96,89 @@ def __create_postcode_search_request(postcode):
         return JsonResponse(json.loads(response.text), status=response.status_code)
 
 
+def get_organisation_name(address):
+    try:
+        org = address.get('ORGANISATION_NAME')
+        return str(org)
+    except Exception as ex:
+        print(ex)
+        return '_empty'
+
+
+def __get_building_name(address):
+    try:
+        name = address.get('BUILDING_NAME')
+        return str(name)
+    except Exception as ex:
+        print(ex)
+
+
+def __get_sub_building_name(address):
+    try:
+        number = address.get('SUB_BUILDING_NAME')
+        return str(number)
+    except Exception as ex:
+        print(ex)
+
+
+
+def __get_building_number(address):
+    try:
+        number = address.get('BUILDING_NUMBER')
+        return str(number)
+    except Exception as ex:
+        print(ex)
+
+
+def __get_thoroughfare_name(address):
+    try:
+        name = address.get('THOROUGHFARE_NAME')
+        return str(name)
+    except Exception as ex:
+        print(ex)
+
+
+def format_address(address):
+    address_line1 = ''
+    address_line2 = ''
+    try:
+        org = get_organisation_name(address)
+        building_name = __get_building_name(address)
+        sub_building_name = __get_sub_building_name(address)
+        building_number = __get_building_number(address)
+        thoroughfare_name = __get_thoroughfare_name(address)
+        address_line2 = building_number + ' ' + thoroughfare_name
+        if org != 'None':
+            if sub_building_name or building_name:
+                address_line1 = org + ', ' + sub_building_name + ' ' + building_name
+            elif building_name:
+                address_line1 = org + ', ' + building_name
+            else:
+                address_line1 = org
+        elif org == 'None':
+            if sub_building_name != 'None' or building_name != 'None':
+                address_line1 = sub_building_name + ' ' + building_name
+            elif sub_building_name == 'None' and building_name == 'None':
+                address_line1 = address_line2
+                address_line2 = ''
+        address_line1 = address_line1.replace('None','')
+        address_line2 = address_line2.replace('None','')
+        addr = [address_line1, address_line2]
+    except Exception as ex:
+        print(ex)
+        return False
+    return addr
+
+
 def __format_response(json_response):
     try:
         results = []
         for address in json_response['results']:
+            address_lines = format_address(address['DPA'])
             temp = {
                 "combinedAddress": address['DPA']['ADDRESS'],
-                "line1": address['DPA']['ADDRESS'].split(',')[0].strip(),
-                "line2": address['DPA']['ADDRESS'].split(',')[1].strip() + ' ' + address['DPA']['ADDRESS'].split(',')[
-                    2].strip(),
+                "line1": address_lines[0],
+                "line2": address_lines[1],
                 "townOrCity": address['DPA']['POST_TOWN'],
                 "county": "TBD",
                 "country": "United Kingdom",
@@ -111,12 +186,12 @@ def __format_response(json_response):
             }
             results.append(temp)
             temp = {}
-
         count = json_response['header']['totalresults']
 
-        return JsonResponse({"count": count, "results": results}, status=200)
     except Exception as ex:
-        return JsonResponse({"message": "Problem formatting results", "error": "Internal Error"}, status=500)
+        print(ex)
+        return JsonResponse({"message": "Problem formatting results", "error": str(ex)}, status=500)
+    return JsonResponse({"count": count, "results": results}, status=200)
 
 
 def __format_error(ex):
