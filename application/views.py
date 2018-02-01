@@ -95,7 +95,7 @@ def create_postcode_search_request(postcode):
           "townOrCity": "ALTRINCHAM",
           "line1": "FORTIS DEVELOPMENTS LTD, BANK HOUSE",
           "combinedAddress": "FORTIS DEVELOPMENTS LTD, BANK HOUSE, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
-          "county" : "CHESHIRE"
+          "county" : ""
         },
         {
           "postcode": "WA14 4PA",
@@ -103,7 +103,7 @@ def create_postcode_search_request(postcode):
           "townOrCity": "ALTRINCHAM",
           "line1": "INFORMED SOLUTIONS LTD, THE OLD BANK",
           "combinedAddress": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
-          "county" : "CHESHIRE"
+          "county" : ""
         }
       ]
     """
@@ -132,7 +132,8 @@ def __format_response(json_response):
                 "line2": address_lines[1],
                 "townOrCity": address['DPA']['POST_TOWN'],
                 "postcode": address['DPA']['POSTCODE'],
-                "county": address['DPA']['LOCAL_CUSTODIAN_CODE_DESCRIPTION'],
+                "county": ''
+                #"county": address['DPA']['LOCAL_CUSTODIAN_CODE_DESCRIPTION'],
             }
             # add result to array
             results.append(temp)
