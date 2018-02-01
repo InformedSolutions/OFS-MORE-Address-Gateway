@@ -86,14 +86,35 @@ def create_postcode_search_request(postcode):
     if len(postcode) == 7:
         postcode = postcode[:4] + ' ' + postcode[4:]
     header = {'content-type': 'application/json'}
-    response = requests.get("https://api.ordnancesurvey.co.uk/places/v1/addresses/postcode?postcode=" + str(
-        postcode) + "&key=" + api_key, headers=header)
-
-    if response.status_code == 200:
-        returned_json = json.loads(response.content.decode('utf-8'))
-        return __format_response(returned_json)
+    if settings.TEST_MODE:
+        static_response_message = """[
+    {
+      "postcode": "WA14 4PA",
+      "line2": " OLD MARKET PLACE",
+      "townOrCity": "ALTRINCHAM",
+      "line1": "FORTIS DEVELOPMENTS LTD, BANK HOUSE",
+      "combinedAddress": "FORTIS DEVELOPMENTS LTD, BANK HOUSE, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA"
+    },
+    {
+      "postcode": "WA14 4PA",
+      "line2": " OLD MARKET PLACE",
+      "townOrCity": "ALTRINCHAM",
+      "line1": "INFORMED SOLUTIONS LTD, THE OLD BANK",
+      "combinedAddress": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA"
+    }
+  ]
+"""
+        returned_json = json.loads(static_response_message)
+        return JsonResponse({"count": 2, "results": returned_json}, status=200)
     else:
-        return JsonResponse(json.loads(response.text), status=response.status_code)
+        response = requests.get("https://api.ordnancesurvey.co.uk/places/v1/addresses/postcode?postcode=" + str(
+            postcode) + "&key=" + api_key, headers=header)
+
+        if response.status_code == 200:
+            returned_json = json.loads(response.content.decode('utf-8'))
+            return __format_response(returned_json)
+        else:
+            return JsonResponse(json.loads(response.text), status=response.status_code)
 
 
 def __format_response(json_response):
@@ -117,7 +138,7 @@ def __format_response(json_response):
         count = json_response['header']['totalresults']
 
     except Exception as ex:
-        if(json_response['header']['totalresults']) == 0 :
+        if (json_response['header']['totalresults']) == 0:
             return JsonResponse({"message": "No results were found", "error": "invalid postcode"}, status=404)
         return JsonResponse({"message": "Problem formatting results", "error": ex}, status=500)
     return JsonResponse({"count": count, "results": results}, status=200)
