@@ -5,7 +5,7 @@
     "version": "v1",
     "title": "Addressing Service"
   },
-  "basePath": "/addressing-service/api/v1",
+  "basePath": "/arc-service/api/v1",
   "tags": [
     {
       "name": "addresses",

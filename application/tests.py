@@ -21,7 +21,7 @@ class TestApi(unittest.TestCase):
         self.client = Client()
         postcode = "WA14 4PA"
         header = {'content-type': 'application/json'}
-        response = self.client.get(settings.BASE_URL + 'addressing-service/api/v1/addresses/' + postcode + '/',
+        response = self.client.get(settings.BASE_URL + 'arc-service/api/v1/addresses/' + postcode + '/',
                                    headers=header)
         self.assertEqual(response.status_code, 200)
 
@@ -40,7 +40,7 @@ class TestApi(unittest.TestCase):
 
         postcode = "WA144PAAAAA"
 
-        response = self.client.get(settings.BASE_URL + 'addressing-service/api/v1/addresses/' + postcode + '/',
+        response = self.client.get(settings.BASE_URL + 'arc-service/api/v1/addresses/' + postcode + '/',
                                    headers=header)
         self.assertEqual(response.status_code, 400)
 
@@ -59,7 +59,7 @@ class TestApi(unittest.TestCase):
 
         postcode = "WA144"
 
-        response = self.client.get(settings.BASE_URL + 'addressing-service/api/v1/addresses/' + postcode + '/',
+        response = self.client.get(settings.BASE_URL + 'arc-service/api/v1/addresses/' + postcode + '/',
                                    headers=header)
         self.assertEqual(response.status_code, 400)
 
@@ -78,7 +78,7 @@ class TestApi(unittest.TestCase):
 
         postcode = "1111111"
 
-        response = self.client.get(settings.BASE_URL + 'addressing-service/api/v1/addresses/' + postcode + '/',
+        response = self.client.get(settings.BASE_URL + 'arc-service/api/v1/addresses/' + postcode + '/',
                                    headers=header)
         self.assertEqual(response.status_code, 400)
 
