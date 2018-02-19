@@ -109,16 +109,16 @@ def create_postcode_search_request(postcode):
     """
             returned_json = json.loads(static_response_message)
             return JsonResponse({"count": 2, "results": returned_json}, status=200)
-    else:
-        response = requests.get("https://api.ordnancesurvey.co.uk/places/v1/addresses/postcode?postcode=" + str(
+        else:
+            response = requests.get("https://api.ordnancesurvey.co.uk/places/v1/addresses/postcode?postcode=" + str(
             postcode) + "&key=" + api_key, headers=header)
-
         if response.status_code == 200:
             returned_json = json.loads(response.content.decode('utf-8'))
             return __format_response(returned_json)
         else:
             return JsonResponse(json.loads(response.text), status=response.status_code)
-
+    else:
+        return JsonResponse({"Error":"Missing Test Mode field in settings file"})
 
 def __format_response(json_response):
     try:
