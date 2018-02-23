@@ -19,3 +19,4 @@ INSTALLED_APPS = BUILTIN_APPS + THIRD_PARTY_APPS + DEV_APPS + PROJECT_APPS
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^87(*&(*&Asdajlkjasdaau*()**)POAKLSMDA<<<<ZNc'
+
