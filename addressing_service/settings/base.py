@@ -1,15 +1,11 @@
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 OS_API_KEY = 'AGAJSHVYKjdmzo34yFe1KLlGlOlCogGB'
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^f)mh%0t_-jck5ir1#y^x79&y)2fexp3c&weq-a_k@_6x0cu*$'
 
 BASE_URL = 'https://ofsted.informed.com/addressing-service/'
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -28,13 +24,19 @@ REST_FRAMEWORK = {
 
 # Application definition
 
-INSTALLED_APPS = [
+BUILTIN_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+THIRD_PARTY_APPS = [
     'rest_framework',
+]
+
+PROJECT_APPS = [
     'application',
 ]
 
