@@ -1,0 +1,4 @@
+PROJECT_SETTINGS=addressing_service.settings.dev
+PROJECT_PORT=8001
+PROJECT_IP=127.0.0.1
+
