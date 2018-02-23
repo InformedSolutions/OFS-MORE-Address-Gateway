@@ -25,7 +25,9 @@ test:
 
 # install depedencies (and virtualenv for linux)
 install:
+ifndef WIN
 	-virtualenv -p python3 .venv
+endif
 	$(PIP_BIN) install -r requirements.txt
 
 # handle django migrations
@@ -34,6 +36,6 @@ migrate:
 	$(PYTHON_BIN) manage.py migrate --settings=$(PROJECT_SETTINGS)
 
 # handle statics
-static_cmd:
+static:
 	$(PYTHON_BIN) manage.py collectstatic --settings=$(PROJECT_SETTINGS)
 
