@@ -7,7 +7,7 @@ OS_API_KEY = 'AGAJSHVYKjdmzo34yFe1KLlGlOlCogGB'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^f)mh%0t_-jck5ir1#y^x79&y)2fexp3c&weq-a_k@_6x0cu*$'
 
-BASE_URL = 'https://ofsted.informed.com/addressing-service/'
+BASE_URL = 'http://localhost:8000/addressing-service/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -70,25 +70,7 @@ WSGI_APPLICATION = 'addressing_service.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = { }
-
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+DATABASES = {}
 
 URL_PREFIX = '/addressing-service'
 

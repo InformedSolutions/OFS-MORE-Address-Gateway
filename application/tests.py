@@ -21,7 +21,7 @@ class TestApi(unittest.TestCase):
         self.client = Client()
         postcode = "WA14 4PA"
         header = {'content-type': 'application/json'}
-        response = self.client.get(settings.BASE_URL + 'arc-service/api/v1/addresses/' + postcode + '/',
+        response = self.client.get(settings.URL_PREFIX + '/api/v1/addresses/' + postcode + '/',
                                    headers=header)
         self.assertEqual(response.status_code, 200)
 
@@ -40,7 +40,7 @@ class TestApi(unittest.TestCase):
 
         postcode = "WA144PAAAAA"
 
-        response = self.client.get(settings.BASE_URL + 'arc-service/api/v1/addresses/' + postcode + '/',
+        response = self.client.get(settings.URL_PREFIX + '/api/v1/addresses/' + postcode + '/',
                                    headers=header)
         self.assertEqual(response.status_code, 400)
 
@@ -59,26 +59,7 @@ class TestApi(unittest.TestCase):
 
         postcode = "WA144"
 
-        response = self.client.get(settings.BASE_URL + 'arc-service/api/v1/addresses/' + postcode + '/',
-                                   headers=header)
-        self.assertEqual(response.status_code, 400)
-
-    def test_invalid_search_postcode(self):
-        """
-        A test for running a postcode search with an invalid postcode (no matches)
-        :return: a success or fail value to the test runner to be reported on completion (see assert on response code)
-        """
-        # Test updating the APi Key
-        self.client = Client()
-        header = {'content-type': 'application/json'}
-        payload = {'api_key': settings.OS_API_KEY}
-        response = self.client.put(settings.URL_PREFIX + '/api/v1/addresses/api-key/', json.dumps(payload),
-                                   'application/json', header=header)
-        self.assertEqual(response.status_code, 200)
-
-        postcode = "1111111"
-
-        response = self.client.get(settings.BASE_URL + 'arc-service/api/v1/addresses/' + postcode + '/',
+        response = self.client.get(settings.URL_PREFIX + '/api/v1/addresses/' + postcode + '/',
                                    headers=header)
         self.assertEqual(response.status_code, 400)
 
