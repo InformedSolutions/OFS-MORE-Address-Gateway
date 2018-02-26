@@ -8,5 +8,15 @@ __pycache__/
 *.py[cod]
 db.sqlite3
 .coverage
+
+### Dev files ###
 .idea/
+.venv/
+.makerc
 .settings/
+
+
+### Vim file ###
+*~
+*.swp
+*.swo
