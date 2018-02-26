@@ -1,7 +1,8 @@
-
 from .base import *
 
 DEBUG = True
+
+TEST_MODE = True
 
 PUBLIC_APPLICATION_URL = 'http://localhost:8000/addressing-service'
 INTERNAL_IPS = "127.0.0.1"

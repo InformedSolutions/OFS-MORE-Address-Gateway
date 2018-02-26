@@ -6,6 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 OS_API_KEY = 'AGAJSHVYKjdmzo34yFe1KLlGlOlCogGB'
 
 BASE_URL = 'http://localhost:8000/addressing-service/'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
