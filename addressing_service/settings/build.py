@@ -3,7 +3,7 @@ from .base import *
 
 DEBUG = True
 
-PUBLIC_APPLICATION_URL = 'http://localhost:8000/addressing-service'
+PUBLIC_APPLICATION_URL = 'http://mcriscd01:8000/addressing-service'
 INTERNAL_IPS = "127.0.0.1"
 
 DEV_APPS = [
