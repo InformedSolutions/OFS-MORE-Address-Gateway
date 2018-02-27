@@ -9,6 +9,8 @@ __pycache__/
 db.sqlite3
 .coverage
 
+staticfiles/
+
 ### Dev files ###
 .idea/
 .venv/

@@ -2,9 +2,11 @@ from .base import *
 
 # You should never enable this in production, even if it's temporarily
 # All INSTALLED_APPS in django relies on this variable, like google-analytics app.
-DEBUG = False
+DEBUG = True
 
 TEST_MODE = False
+
+BASE_URL = 'https://ofsted.informed.com/addressing-service/'
 
 PROD_APPS = [
     'whitenoise',
