@@ -6,9 +6,8 @@ DEBUG = False
 
 TEST_MODE = False
 
-ALLOWED_HOSTS = ['*']
-
 PROD_APPS = [
+    'whitenoise',
 ]
 
 INSTALLED_APPS = BUILTIN_APPS + THIRD_PARTY_APPS + PROD_APPS + PROJECT_APPS
