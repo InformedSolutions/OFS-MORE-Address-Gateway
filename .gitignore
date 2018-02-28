@@ -8,6 +8,7 @@ __pycache__/
 *.py[cod]
 db.sqlite3
 .coverage
+staticfiles/
 
 ### Dev files ###
 .idea/
