@@ -4,6 +4,7 @@ DEBUG = True
 
 TEST_MODE = True
 
+ALLOWED_HOSTS = ['*']
 PUBLIC_APPLICATION_URL = 'http://localhost:8000/addressing-service'
 INTERNAL_IPS = "127.0.0.1"
 
