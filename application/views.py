@@ -31,7 +31,7 @@ def postcode_request(request, postcode):
                             status=403)
     try:
         # ensure the postcode is long enough
-        if len(postcode.strip()) > 5:
+        if len(postcode.strip()) >= 5:
             serializer = PostcodeRequestSerializer(data={'postcode': postcode})
             # ensures that the data fits the data model (ensures it's long enough)
             if serializer.is_valid():
