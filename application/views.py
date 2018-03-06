@@ -34,7 +34,7 @@ def postcode_request(request, postcode):
     try:
         # ensure the postcode is long enough
         if len(pc) >= 5:
-            postcode_regex = re.compile(r'\b[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][ABD-HJLNP-UW-Z]{2}\b')
+            postcode_regex = re.compile(r'\b[A-Z]{1,2}[0-9][A-Z0-9]?[0-9][ABD-HJLNP-UW-Z]{2}\b')
             if postcode_regex.match(pc):
                 serializer = PostcodeRequestSerializer(data={'postcode': pc})
                 # ensures that the data fits the data model (ensures it's long enough)
