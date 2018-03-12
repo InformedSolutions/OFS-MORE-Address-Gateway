@@ -10,8 +10,6 @@ BASE_URL = 'http://localhost:8000/addressing-service/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -89,9 +87,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-gb'
+LANGUAGE_CODE = 'en-GB'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/London'
 
 USE_I18N = True
 

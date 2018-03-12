@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from ast import literal_eval
-
+import re
 # initiate logging
 log = logging.getLogger('django.server')
 
@@ -25,21 +25,29 @@ def postcode_request(request, postcode):
     :param postcode: The postcode to lookup
     :return: JsonResponse with the success/error message
     """
+    # remove whitespace from postcode and convert to uppercase
+    pc=postcode.replace(' ', '').upper()
     # handle empty postcode request
     if len(api_key) == 0:
         return JsonResponse({'message': 'Missing API key, please enter one before you make a postcode search'},
                             status=403)
     try:
         # ensure the postcode is long enough
-        if len(postcode.strip()) > 5:
-            serializer = PostcodeRequestSerializer(data={'postcode': postcode})
-            # ensures that the data fits the data model (ensures it's long enough)
-            if serializer.is_valid():
-                return create_postcode_search_request(serializer.data)
-            err = __format_error(serializer.errors)
-            log.error("Django serialization error: " + err[0] + err[1])
-            return JsonResponse({"message": err[0] + err[1], "error": "Bad Request"},
-                                status=status.HTTP_400_BAD_REQUEST)
+        if len(pc) >= 5:
+            postcode_regex = re.compile(r'\b[A-Z]{1,2}[0-9][A-Z0-9]?[0-9][ABD-HJLNP-UW-Z]{2}\b')
+            if postcode_regex.match(pc):
+                serializer = PostcodeRequestSerializer(data={'postcode': pc})
+                # ensures that the data fits the data model (ensures it's long enough)
+                if serializer.is_valid():
+                    return create_postcode_search_request(serializer.data)
+                err = __format_error(serializer.errors)
+                log.error("Django serialization error: " + err[0] + err[1])
+                return JsonResponse({"message": err[0] + err[1], "error": "Bad Request"},
+                                    status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return JsonResponse({'message': 'This is not a valid postcode, it does not match the regular expression',
+                                     'error': 'Bad Request'},
+                                    status=400)
         else:
             return JsonResponse({'message': 'The post code is too short',
                                  'error': 'Bad Request'},

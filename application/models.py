@@ -11,7 +11,7 @@ class PostcodeRequest(models.Model):
     """
     Model used for making a postcode search
     """
-    postcode = models.CharField(max_length=9, blank=False)
+    postcode = models.CharField(max_length=7, blank=False)
 
 
 class ApiKey(models.Model):
