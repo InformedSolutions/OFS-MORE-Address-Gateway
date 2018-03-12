@@ -9,8 +9,6 @@ db.sqlite3
 .coverage
 staticfiles/
 
-staticfiles/
-
 ### Dev files ###
 .idea/
 .venv/
