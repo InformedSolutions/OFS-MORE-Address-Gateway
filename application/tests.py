@@ -13,18 +13,6 @@ from django.test import Client
 
 class TestApi(unittest.TestCase):
 
-    def test_search_postcode(self):
-        """
-        A test for running a postcode search
-        :return: a success or fail value to the test runner to be reported on completion (see assert on response code)
-        """
-        self.client = Client()
-        postcode = "WA14 4PA"
-        header = {'content-type': 'application/json'}
-        response = self.client.get(settings.URL_PREFIX + '/api/v1/addresses/' + postcode + '/',
-                                   headers=header)
-        self.assertEqual(response.status_code, 200)
-
     def test_long_search_postcode(self):
         """
         A test for running a postcode search with a postcode that is too long
