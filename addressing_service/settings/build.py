@@ -4,6 +4,8 @@ DEBUG = True
 
 TEST_MODE = True
 
+OS_API_KEY = os.environ.get('OS_API_KEY')
+
 ALLOWED_HOSTS = ['*']
 PUBLIC_APPLICATION_URL = 'http://mcriscd01:8000/addressing-service'
 
