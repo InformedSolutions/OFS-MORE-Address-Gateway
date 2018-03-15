@@ -4,7 +4,7 @@ from .base import *
 # All INSTALLED_APPS in django relies on this variable, like google-analytics app.
 DEBUG = True
 
-TEST_MODE = False
+TEST_MODE = os.environ.get('TEST_MODE', False)
 
 OS_API_KEY = os.environ.get('OS_API_KEY')
 
