@@ -25,3 +25,33 @@ MIDDLEWARE = MIDDLEWARE + PROD_MIDDLEWARE
 # SECURITY WARNING: keep the secret key used in production secret!
 # Note docker mounts are used for adjusting settings used on production instances
 SECRET_KEY = '^f)mh%0t_-jck5ir1#y^x79&y)2fexp3c&weq-a_k@_6x0cu*$'
+
+# Automatic Django logging at the INFO level (i.e everything the comes to the console when ran locally)
+LOGGING = {
+  'version': 1,
+  'disable_existing_loggers': False,
+  'formatters': {
+    'console': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        },
+        },
+  'handlers': {
+    'django.server': {
+        'level': 'INFO',
+        'class': 'logging.handlers.RotatingFileHandler',
+        'maxBytes': 1 * 1024 * 1024,
+        'filename': 'logs/output.log',
+        'formatter': 'console',
+        'maxBytes': 1 * 1024 * 1024,
+        'backupCount': '30'
+    },
+   },
+   'loggers': {
+     'django.server': {
+       'handlers': ['django.server'],
+         'level': 'INFO',
+           'propagate': True,
+      },
+    },
+}
