@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = True
 
-TEST_MODE = False
+TEST_MODE = True
 
 OS_API_KEY = os.environ.get('OS_API_KEY')
 
