@@ -28,7 +28,7 @@ def postcode_request(request, postcode):
     # remove whitespace from postcode and convert to uppercase
     pc=postcode.replace(' ', '').upper()
     # handle empty postcode request
-    if len(api_key) == 0:
+    if api_key is None and not settings.TEST_MODE:
         return JsonResponse({'message': 'Missing API key, please enter one before you make a postcode search'},
                             status=403)
     try:
