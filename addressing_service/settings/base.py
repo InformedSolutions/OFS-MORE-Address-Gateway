@@ -1,7 +1,6 @@
 import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Note docker mounts are used for adjusting settings used on production instances
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
