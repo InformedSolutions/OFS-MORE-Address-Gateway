@@ -1,9 +1,18 @@
 import os
 
+# SECURITY WARNING: keep the secret key used in production secret!
+# Note docker mounts are used for adjusting settings used on production instances
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-BASE_URL = 'http://localhost:8000/addressing-service/'
+OS_API_KEY = os.environ.get('OS_API_KEY')
+
+BASE_URL = os.environ.get('BASE_URL')
+PUBLIC_APPLICATION_URL = os.environ.get('PUBLIC_APPLICATION_URL')
+
+TEST_MODE = os.environ.get('TEST_MODE')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

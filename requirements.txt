@@ -2,9 +2,9 @@ Django==1.11.10
 djangorestframework==3.5.3
 psycopg2-binary
 coreapi==2.3.3
-PyYAML
-openapi-codec
-unittest-xml-reporting
-requests
-django-debug-toolbar
-whitenoise
+PyYAML==3.12
+openapi-codec==1.3.2
+unittest-xml-reporting==1.11.0
+requests==2.18.4
+django-debug-toolbar==1.9.1
+whitenoise==3.3.1
