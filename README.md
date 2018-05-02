@@ -9,7 +9,7 @@ Once these dependencies have been gathered, you can run the service itself by is
 
 ## Supported methods
 
-For detail of the methods support by this API and how to use them, please see Swagger documentation provided on the path http://localhost:8000/addressing-gateway/static/swagger/index.html. Alternatively, you can generate offline documentation for ease of sharing by following the steps outlined below.
+For detail of the methods support by this API and how to use them, please see Swagger documentation provided on the path http://localhost:8000/addressing-service/static/swagger/index.html. Alternatively, you can generate offline documentation for ease of sharing by following the steps outlined below.
 
 ## Generating offline documentation
 
