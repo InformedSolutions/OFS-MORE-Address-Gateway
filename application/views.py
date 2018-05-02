@@ -95,26 +95,26 @@ def create_postcode_search_request(postcode):
         postcode = postcode[:4] + ' ' + postcode[4:]
     header = {'content-type': 'application/json'}
     if hasattr(settings, 'TEST_MODE'):
-        if settings.TEST_MODE:
+        if settings.TEST_MODE == 'True':
             static_response_message = """[
-        {
-          "postcode": "WA14 4PA",
-          "line2": " OLD MARKET PLACE",
-          "townOrCity": "ALTRINCHAM",
-          "line1": "FORTIS DEVELOPMENTS LTD, BANK HOUSE",
-          "combinedAddress": "FORTIS DEVELOPMENTS LTD, BANK HOUSE, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
-          "county" : ""
-        },
-        {
-          "postcode": "WA14 4PA",
-          "line2": " OLD MARKET PLACE",
-          "townOrCity": "ALTRINCHAM",
-          "line1": "INFORMED SOLUTIONS LTD, THE OLD BANK",
-          "combinedAddress": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
-          "county" : ""
-        }
-      ]
-    """
+            {
+              "postcode": "WA14 4PA",
+              "line2": " OLD MARKET PLACE",
+              "townOrCity": "ALTRINCHAM",
+              "line1": "FORTIS DEVELOPMENTS LTD, BANK HOUSE",
+              "combinedAddress": "FORTIS DEVELOPMENTS LTD, BANK HOUSE, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
+              "county" : ""
+            },
+            {
+              "postcode": "WA14 4PA",
+              "line2": " OLD MARKET PLACE",
+              "townOrCity": "ALTRINCHAM",
+              "line1": "INFORMED SOLUTIONS LTD, THE OLD BANK",
+              "combinedAddress": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
+              "county" : ""
+            }
+          ]
+        """
             returned_json = json.loads(static_response_message)
             return JsonResponse({"count": 2, "results": returned_json}, status=200)
         else:
