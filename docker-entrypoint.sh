@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/sh
+
+cp /usr/share/zoneinfo/GB /etc/localtime
 
 #Collect static resources
 echo "Collecting static assets"

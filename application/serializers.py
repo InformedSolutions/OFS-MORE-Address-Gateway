@@ -1,13 +1,10 @@
 """
-OFS-MORE-CCN3: Apply to be a Childminder Beta
--- serializers.py --
-
-@author: Informed Solutions
+Serializer definitions for address domain models
 """
 
 from rest_framework import serializers
 
-from application.models import PostcodeRequest, ApiKey
+from .models import PostcodeRequest, ApiKey
 
 
 class PostcodeRequestSerializer(serializers.ModelSerializer):
