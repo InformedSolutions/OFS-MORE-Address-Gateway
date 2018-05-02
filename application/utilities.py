@@ -1,8 +1,5 @@
 """
-OFS-MORE-CCN3: Apply to be a Childminder Beta
--- utilities.py --
-
-@author: Informed Solutions
+Utility methods for addressing features
 """
 
 import re

@@ -1,16 +1,21 @@
+"""
+View implementation for postcode lookup features
+"""
+
 import json
 import logging
 import traceback
 
 import requests
-from application.serializers import ApiKeySerializer, PostcodeRequestSerializer
-from application.utilities import Utilities
+from .serializers import ApiKeySerializer, PostcodeRequestSerializer
+from .utilities import Utilities
 from django.conf import settings
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
-from ast import literal_eval
+
 import re
+
 # initiate logging
 log = logging.getLogger('django.server')
 
@@ -97,24 +102,24 @@ def create_postcode_search_request(postcode):
     if hasattr(settings, 'TEST_MODE'):
         if settings.TEST_MODE == 'True':
             static_response_message = """[
-            {
-              "postcode": "WA14 4PA",
-              "line2": " OLD MARKET PLACE",
-              "townOrCity": "ALTRINCHAM",
-              "line1": "FORTIS DEVELOPMENTS LTD, BANK HOUSE",
-              "combinedAddress": "FORTIS DEVELOPMENTS LTD, BANK HOUSE, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
-              "county" : ""
-            },
-            {
-              "postcode": "WA14 4PA",
-              "line2": " OLD MARKET PLACE",
-              "townOrCity": "ALTRINCHAM",
-              "line1": "INFORMED SOLUTIONS LTD, THE OLD BANK",
-              "combinedAddress": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
-              "county" : ""
-            }
-          ]
-        """
+                {
+                  "postcode": "WA14 4PA",
+                  "line2": " OLD MARKET PLACE",
+                  "townOrCity": "ALTRINCHAM",
+                  "line1": "FORTIS DEVELOPMENTS LTD, BANK HOUSE",
+                  "combinedAddress": "FORTIS DEVELOPMENTS LTD, BANK HOUSE, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
+                  "county" : ""
+                },
+                {
+                  "postcode": "WA14 4PA",
+                  "line2": " OLD MARKET PLACE",
+                  "townOrCity": "ALTRINCHAM",
+                  "line1": "INFORMED SOLUTIONS LTD, THE OLD BANK",
+                  "combinedAddress": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
+                  "county" : ""
+                }
+              ]
+            """
             returned_json = json.loads(static_response_message)
             return JsonResponse({"count": 2, "results": returned_json}, status=200)
         else:
@@ -126,9 +131,17 @@ def create_postcode_search_request(postcode):
         else:
             return JsonResponse(json.loads(response.text), status=response.status_code)
     else:
-        return JsonResponse({"Error":"Missing Test Mode field in settings file"})
+        return JsonResponse(
+            {"Error": "Missing Test Mode field in settings file"}
+        )
+
 
 def __format_response(json_response):
+    """
+    Helper method for formatting a JSON response object returned in response to a postcode search
+    :param json_response:
+    :return:
+    """
     try:
         results = []
         for address in json_response['results']:
@@ -140,12 +153,10 @@ def __format_response(json_response):
                 "line2": address_lines[1],
                 "townOrCity": address['DPA']['POST_TOWN'],
                 "postcode": address['DPA']['POSTCODE'],
-                "county": ''
-                #"county": address['DPA']['LOCAL_CUSTODIAN_CODE_DESCRIPTION'],
+                "county": address['DPA']['LOCAL_CUSTODIAN_CODE_DESCRIPTION'],
             }
             # add result to array
             results.append(temp)
-            temp = {}
 
         # Get the total number of matches for the requested postcode
         count = json_response['header']['totalresults']
@@ -163,7 +174,6 @@ def __format_address(address):
     :return: An array with the address line 1 and address line 2 in it.
     """
     address_line1 = ''
-    address_line2 = ''
     try:
         # Use getters to get all address line variables
         org = get_organisation_name(address)
@@ -203,7 +213,7 @@ def __format_address(address):
 
 def get_organisation_name(address):
     """
-
+    Helper method for retrieving an organisation name within an address
     :param address: an individual address object
     :return: organisation name
     """
@@ -217,7 +227,7 @@ def get_organisation_name(address):
 
 def __get_building_name(address):
     """
-
+    Helper method for retrieving a building name within an address
     :param address: an individual address object
     :return: building name
     """
@@ -230,7 +240,7 @@ def __get_building_name(address):
 
 def __get_sub_building_name(address):
     """
-
+    Helper method for retrieving a sub-building name within an address
     :param address: an individual address object
     :return: sub building name
     """
@@ -243,7 +253,7 @@ def __get_sub_building_name(address):
 
 def __get_building_number(address):
     """
-
+    Helper method for retrieving a building number within an address
     :param address: an individual address object
     :return: building number
     """
@@ -256,7 +266,7 @@ def __get_building_number(address):
 
 def __get_thoroughfare_name(address):
     """
-
+    Helper method for retrieving a thoroughfare within an address
     :param address: an individual address object
     :return: street/road name
     """

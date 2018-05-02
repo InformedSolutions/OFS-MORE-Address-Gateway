@@ -1,8 +1,5 @@
 """
-OFS-MORE-CCN3: Apply to be a Childminder Beta
--- models.py --
-
-@author: Informed Solutions
+Address domain model definitions
 """
 from django.db import models
 
