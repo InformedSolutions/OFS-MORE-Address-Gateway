@@ -146,10 +146,6 @@
         "postcode": {
           "type": "string",
           "example": "WA14 4PA"
-        },
-        "county": {
-          "type": "string",
-          "example": "Cheshire"
         }
       }
     },
