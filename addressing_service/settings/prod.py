@@ -4,6 +4,8 @@ from .base import *
 # All INSTALLED_APPS in django relies on this variable, like google-analytics app.
 DEBUG = False
 
+OS_API_KEY = os.environ.get('OS_API_KEY')
+
 ALLOWED_HOSTS = ['*']
 
 PROD_APPS = [
