@@ -107,14 +107,14 @@ def create_postcode_search_request(postcode):
                   "line2": " OLD MARKET PLACE",
                   "townOrCity": "ALTRINCHAM",
                   "line1": "FORTIS DEVELOPMENTS LTD, BANK HOUSE",
-                  "combinedAddress": "FORTIS DEVELOPMENTS LTD, BANK HOUSE, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
+                  "combinedAddress": "FORTIS DEVELOPMENTS LTD, BANK HOUSE, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA"
                 },
                 {
                   "postcode": "WA14 4PA",
                   "line2": " OLD MARKET PLACE",
                   "townOrCity": "ALTRINCHAM",
                   "line1": "INFORMED SOLUTIONS LTD, THE OLD BANK",
-                  "combinedAddress": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA",
+                  "combinedAddress": "INFORMED SOLUTIONS LTD, THE OLD BANK, OLD MARKET PLACE, ALTRINCHAM, WA14 4PA"
                 }
               ]
             """
