@@ -41,19 +41,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Matched addresses",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/PostcodeResponse"
             }
           },
           "400": {
-            "description": "Error Bad Request",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
           "404": {
-            "description": "Bad request",
+            "description": "Not Found",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -93,7 +93,7 @@
         ],
         "responses": {
           "200": {
-            "description": "API Key updated",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/UpdateApiKeyResponse"
             }
@@ -102,7 +102,7 @@
             "description": "Bad request"
           },
           "500": {
-            "description": "Server error"
+            "description": "Internal Server Error"
           }
         }
       }
@@ -114,7 +114,7 @@
       "properties": {
         "count": {
           "type": "string",
-          "example": 2
+          "example": 1
         },
         "results": {
           "type": "array",
