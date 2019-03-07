@@ -1,4 +1,4 @@
-FROM python:3.5-slim
+FROM python:3.6-slim
 ENV PYTHONUNBUFFERED 1
 ADD requirements.txt /source/
 RUN mkdir /source/logs
