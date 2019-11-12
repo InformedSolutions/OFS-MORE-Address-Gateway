@@ -4,14 +4,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-DEV_APPS = [
-]
-
-MIDDLEWARE_DEV = [
-]
-
-MIDDLEWARE = MIDDLEWARE + MIDDLEWARE_DEV
-INSTALLED_APPS = BUILTIN_APPS + THIRD_PARTY_APPS + DEV_APPS + PROJECT_APPS
+INSTALLED_APPS = BUILTIN_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 # Automatic Django logging at the INFO level (i.e everything the comes to the console when ran locally)
 LOGGING = {
